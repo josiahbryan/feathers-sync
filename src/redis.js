@@ -12,10 +12,10 @@ module.exports = function (config) {
       var services = this.services;
       Object.keys(services).forEach(function (path) {
         var service = services[path];
-	if(config.pass) {
+        if(config.pass) {
           var parts = config.db.split(':');
-          var host = parts[0];
-          var port = parts[1] || 6379;
+          var host = parts[1].replace('//','');
+          var port = parts[2] || 6379;
           service.pub = redis.createClient(port, host, { auth_pass: config.pass });
           service.sub = redis.createClient(port, host, { auth_pass: config.pass });
         } else {
